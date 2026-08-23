@@ -1,6 +1,6 @@
 # Graph
 
-Website to graph functions I built in college.
+Website to graph functions I built in 2023.
 
 ## Screenshots
 
