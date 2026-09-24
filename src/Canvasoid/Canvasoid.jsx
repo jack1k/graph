@@ -77,7 +77,7 @@ class Graph {
 
     smoothZoom = (mouseX, mouseY, delta) => {
         const zoomFactor = delta > 0 ? -1 / 16 : 1 / 16
-        const newZoom = Math.max(-3, Math.min(3, this.zoom + zoomFactor))
+        const newZoom = Math.max(-3, Math.min(5, this.zoom + zoomFactor))
 
         if (newZoom === this.zoom) return // Prevent unnecessary updates
 

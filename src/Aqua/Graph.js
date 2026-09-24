@@ -2,12 +2,13 @@ import { sign, floor, ceil, max, min, clamp, log, round, abs } from "./functions
 import Solver from "./Solver"
 
 class F {
-    constructor({ graph, f, style, canvas, context }) {
+    constructor({ graph, f, style, canvas, context, id }) {
         this.canvas = canvas
         this.context = context
         this.graph = graph
         this.f = f
         this.style = style
+        this.id = id
 
         this.solver = new Solver()
     }
@@ -89,7 +90,20 @@ export default class Graph {
         this.origin = { x: 0, y: 0, prevX: 0, prevY: 0 }
         this.isDragging = false
         this.objects = []
-        this.objectColors = ["#00AF54", "#279AF1", "#EF233C", "#FFD639", "#303030"]
+        this.objectColors = [
+            "#40c057",
+            "#fcc419",
+            "#4c6ef5",
+            "#e03131",
+            "#be4bdb",
+            "#0ca678",
+            "#fd7e14",
+            "#7048e8",
+            "#339af0",
+            "#f06595",
+            "#15aabf",
+            "#868e96",
+        ]
 
         this.dirty = true
         
@@ -117,10 +131,15 @@ export default class Graph {
 
     // functions
 
-    addF = (f) => {
+    addF = (f, id) => {
         const style = this.objectColors[this.objects.length % this.objectColors.length]
-        this.objects.push(new F({ graph: this, f: f, style: style, canvas: this.canvas, context: this.context}))
+        this.objects.push(new F({ graph: this, f: f, style: style, canvas: this.canvas, context: this.context, id }))
 
+        this.dirty = true
+    }
+
+    removeF = (id) => {
+        this.objects = this.objects.filter(o => o.id !== id)
         this.dirty = true
     }
     
@@ -146,6 +165,8 @@ export default class Graph {
     // zooming
 
     zoomIt = (mouseX, mouseY, delta) => {
+        if (delta === 0) return
+
         const canvasX = mouseX - this.canvas.getBoundingClientRect().x
         const canvasY = mouseY - this.canvas.getBoundingClientRect().y
 

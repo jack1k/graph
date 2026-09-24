@@ -1,10 +1,24 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef, useEffect, useMemo } from "react"
 import Graph from "./Graph"
+import { f } from "../f"
 
 const Aqua = () => {
     const canvasRef = useRef()
     const [userInput, setUserInput] = useState("")
     const [graph, setGraph] = useState(null)
+    const [activeIds, setActiveIds] = useState([])
+
+const toggleFunction = (fn, id, checked) => {
+    if (!graph) return
+
+    try {
+        if (checked) graph.addF(fn, id)
+        else graph.removeF(id)
+        setActiveIds(graph.objects.map(o => o.id))   // this triggers the re-render
+    } catch (error) {
+        alert("Invalid function")
+    }
+}
 
     useEffect(() => {
         const canvas = canvasRef.current
@@ -69,28 +83,19 @@ const Aqua = () => {
         }
     }, [])
 
-    const handleFunction = () => {
-        if (!graph) return
-
-        const a = Math.random() + 1
-        const b = Math.random() + 1
-        const c = Math.random() * Math.PI * 2
-
-        try {
-            // graph.addF((x) => Math.sin(x / a + c) * b)
-
-            graph.addF((x) => Math.sin(2 ** x))
-
-        } catch (error) {
-            alert("Invalid function")
-        }
-    }
-
-    handleFunction()
-
     return (
         <div className="aqua">
             <canvas className="canvas" ref={canvasRef}></canvas>
+            <div className="box">
+                {Object.entries(f).map(([key, value]) => <label key={key}>
+                    <input
+                        type="checkbox"
+                        checked={activeIds.includes(key)}
+                        onChange={(e) => toggleFunction(value, key, e.target.checked)}
+                    />
+                    <p>{key}</p>
+                </label>)}
+            </div>
         </div>
     )
 }
