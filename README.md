@@ -2,6 +2,8 @@
 
 Website to graph functions I built in 2023.
 
+Link: https://graph.jackkirkham.com
+
 ## Screenshots
 
 <div style="display:flex; flex-wrap:wrap; gap:16px;">
