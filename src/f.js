@@ -1,6 +1,6 @@
 export const f = {
     "e^x": (x) => Math.E ** x,
-    "ln(x)": (x) => Math.log(x),
+    "log(x)": (x) => Math.log(x),
     "x^2": (x) => x ** 2,
     "x^3": (x) => x ** 3,
     "sin(x)": (x) => Math.sin(x),

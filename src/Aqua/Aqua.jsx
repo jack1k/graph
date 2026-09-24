@@ -8,17 +8,17 @@ const Aqua = () => {
     const [graph, setGraph] = useState(null)
     const [activeIds, setActiveIds] = useState([])
 
-const toggleFunction = (fn, id, checked) => {
-    if (!graph) return
+    const toggleFunction = (fn, id, checked) => {
+        if (!graph) return
 
-    try {
-        if (checked) graph.addF(fn, id)
-        else graph.removeF(id)
-        setActiveIds(graph.objects.map(o => o.id))   // this triggers the re-render
-    } catch (error) {
-        alert("Invalid function")
+        try {
+            if (checked) graph.addF(fn, id)
+            else graph.removeF(id)
+            setActiveIds(graph.objects.map(o => o.id))   // this triggers the re-render
+        } catch (error) {
+            alert("Invalid function")
+        }
     }
-}
 
     useEffect(() => {
         const canvas = canvasRef.current
@@ -82,6 +82,13 @@ const toggleFunction = (fn, id, checked) => {
             canvas.removeEventListener("wheel", onWheel)
         }
     }, [])
+
+    useEffect(() => {
+        toggleFunction(f["e^x"], "e^x", true)
+        toggleFunction(f["log(x)"], "log(x)", true)
+        toggleFunction(f["sin(x)"], "sin(x)", true)
+        toggleFunction(f["cos(x)"], "cos(x)", true)
+    }, [graph])
 
     return (
         <div className="aqua">
